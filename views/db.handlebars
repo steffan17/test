@@ -1,0 +1,16 @@
+    <div id='container'>
+        <form id='sqlQuerryForm' role="form">
+            <input id='sqlQuerry' name='querry' type="text" placeholder="SQL.....">
+            <button id='button' type="submit">GO</button>
+        </form>
+        <div id='result'>
+            Resultat
+        </div>
+
+    </div>
+
+
+    
+{{#each scripts}}
+  <script src="{{script}}"></script>
+{{/each}}
