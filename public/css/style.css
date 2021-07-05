@@ -1,0 +1,34 @@
+.tablesList {
+  border: 1px solid #000000;
+  border-radius: 10px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: fit-content;
+  height: fit-content;
+  padding-left: 20px;
+  padding-right: 20px; }
+
+.tablesList > li {
+  margin: 5px; }
+
+.tablesList > li:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer; }
+
+.result {
+  display: flex; }
+
+.tableContent {
+  border: 1px solid #000000;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-block-start: 1em;
+  height: fit-content; }
+
+table.tableTable td:nth-child(even) {
+  background: #D4D4D4; }
+
+/*# sourceMappingURL=style.css.map */
