@@ -41,7 +41,8 @@ const renderHTMLTableNames = function(array)
             return `
             <li class='tableName' name='${tableName}'>${tableName}</li>`
         }).join('')}
-        </ul>`
+        </ul>
+        <div id='tableContent' class='tableContent'></div>`
 }
 
 const result = document.getElementById('result');
@@ -60,51 +61,75 @@ showTables()
 const showTheTable = (tableName)=>{
 
     fetch(`/api/showTheTable?tableName=${tableName}`).then(res => res.json()).then(data => {
-        const existTableContent = document.getElementsByClassName('tableContent')
-        
-        if(existTableContent.length){
-            existTableContent.innerHTML='ale'
-            console.log(existTableContent)
-            }
-        const tableContent = document.createElement('div')
-        tableContent.className = 'tableContent';
+        const tableContent = document.getElementById('tableContent')
         tableContent.innerHTML=renderTableHTML(tableName, data)
-        result.appendChild(tableContent)
-        const showTableBack = document.getElementById('showTableBack').addEventListener('click', ()=>showTables())
-
-    })
+        const editButtons = [...document.getElementsByClassName('editButton')].map(e=>{e.addEventListener('click',()=>showDialogBox(e))})
+        const deleteButtons = [...document.getElementsByClassName('deleteButton')].map(e=>{e.addEventListener('click',()=>showDialogBox(e))})
+     })
 
 }
 
 const renderTableHTML = function(tableName, array)
 {
    
-    
+    if(array.info.countRecords)
+    {
     const tableNames = [] 
-    Object.keys(array[0]).map((e) => {tableNames.push(e)})
+    Object.keys(array.records[0]).map((e) => {tableNames.push(e)})
     
     return `
-    <div id=showTableBack><<<<<</div>
     <table id='tableTable' class='tableTable'>
     <caption>${tableName}</caption>
    
     <thead> 
     ${tableNames.map(e =>{return `<th>${e}</th>`}).join('')}
     </thead>
-    ${array.map(arrayMap => {
+    ${array.records.map(arrayMap => {
         
         return `<tr>
             ${tableNames.map(tableNamesMap => {
 
-                return `<td>${arrayMap[tableNamesMap]}</td>`
+                return `<td id='${tableNamesMap}'>${arrayMap[tableNamesMap]}</td>`
 
             }).join('')}
-        <td><div id=editButton><img src=../img/icoEdit.png width=20px></div></td>
-        <td><div id=editButton><img src=../img/icoDelete.png width=20px></div></td>
+        <td><div id='ID${arrayMap[tableNames[0]]}' data-id='${arrayMap[tableNames[0]]}' class='editButton'><img src=../img/icoEdit.png width=20px></div></td>
+        <td><div id='ID${arrayMap[tableNames[0]]}' data-id='${arrayMap[tableNames[0]]}' class='deleteButton'><img src=../img/icoDelete.png width=20px></div></td>
         </tr>`
 
     }).join('')}
     </table>`
+    }else return `<table id='tableTable' class='tableTable'>
+    <caption>${tableName}</caption>
+   
+    <thead> 
+    ${array.collumnNames.map(e =>{return `<th>${e}</th>`}).join('')}
+    </thead>
+    <tr><td>Pusta Tabela</td></tr>`
+
     
 }
 
+const showDialogBox = function(e)
+{
+    console.log(e.dataset.id)
+    console.log(e.className)
+    const tableName = document.getElementById('tableTable').caption.innerHTML
+    console.log(tableName)
+    const container = document.getElementById('container')
+    const modalBox = document.createElement('div')
+    modalBox.addClass='modalBox'
+
+    if(e.className=='editButton')
+   { 
+        modalBox.innerHTML = `
+        <div id='myModalBox' class='modalBox'>
+            <div class='modalBox-content'>
+                <span class='closeModalBox'>&times;</span>
+                <p>Some text in the Modal..</p>
+            </div>
+        </div>`
+    }
+
+    container.appendChild(modalBox)
+
+}

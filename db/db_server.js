@@ -7,7 +7,12 @@ const getTableColumnNames = (database, tableName)=>
     {
         let  db = new sqlite3.Database(database)
         const sql = `SELECT name FROM PRAGMA_TABLE_INFO('${tableName}')`
-        const collumnNames =[] 
+        const data = {}
+        
+        data.collumnNames =[] 
+        data.info = {}
+        data.info.sql = sql
+        data.info.countRecords = 0
         db.each(sql,[],(err, row)=>
         {
             if(err)
@@ -15,7 +20,8 @@ const getTableColumnNames = (database, tableName)=>
                 rej(err)
             }else
             {
-                collumnNames.push(row.name)
+                data.collumnNames.push(row.name)
+               
             }
         },(err, n)=>
         {
@@ -25,7 +31,7 @@ const getTableColumnNames = (database, tableName)=>
             }else
             {
                 db.close
-                res(collumnNames)
+                res(data)
             }
         })
         
@@ -73,7 +79,13 @@ module.exports = {
         {
             let  db = new sqlite3.Database(database)
             const sql = `SELECT * FROM ${tableName}`
-            const data =[] 
+            
+            const data = {}
+            data.records = []
+            data.collumnNames = []
+            data.info = {}
+            data.info.sql = sql
+            data.info.countRecords = 0
 
             db.each(sql,[], (err,row)=>
             {
@@ -82,7 +94,13 @@ module.exports = {
                     rej(err)
                 }else
                 {
-                    data.push(row)
+                    data.info.countRecords++
+                    data.records.push(row)
+                    if(data.info.countRecords==1)
+                    {
+                        Object.keys(row).map((e) => {data.collumnNames.push(e)})
+                    }
+                    
                 }
                 
             },(err, n)=>
@@ -92,13 +110,13 @@ module.exports = {
                     rej(err)
                 }else
                 {   
-                    if(n==0)
+                    if(data.info.countRecords){res(data)}
+                    else
                     {
+                        data.collumnNames = getTableColumnNames(database,tableName)
                         res(getTableColumnNames(database,tableName))
-                    }else
-                    {
-                        res(data)
                     }
+                    
                 }
             })
         })
