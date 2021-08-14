@@ -132,4 +132,6 @@ const showDialogBox = function(e)
 
     container.appendChild(modalBox)
 
+    document.getElementById('myModalBox').style.display="block"
+
 }
