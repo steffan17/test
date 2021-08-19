@@ -21,7 +21,7 @@ app.use('/', apiRouter)
 app.use(express.static('public'));
 
 app.get('/db', (req, res) => {
-    var scripts = [{ script: '/dbInterface/js/db_front.js' }];
+    var scripts = [{ script: '/js/bundle.js' }];
     res.render('db', { title: 'DB', scripts: scripts })
 })
 
