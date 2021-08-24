@@ -11,3 +11,25 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
+
+  .modalBox-content{
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  .closeModalBox {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .closeModalBox:hover,
+.closeModalBox:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}

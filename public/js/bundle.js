@@ -2,8 +2,9 @@
 /******/ 	var __webpack_modules__ = ([
 /* 0 */,
 /* 1 */
-/***/ (() => {
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
+const modalBox = __webpack_require__(2)
 
 console.log(`It's working :-)`)
 
@@ -69,8 +70,8 @@ const showTheTable = (tableName)=>{
     fetch(`/api/showTheTable?tableName=${tableName}`).then(res => res.json()).then(data => {
         const tableContent = document.getElementById('tableContent')
         tableContent.innerHTML=renderTableHTML(tableName, data)
-        const editButtons = [...document.getElementsByClassName('editButton')].map(e=>{e.addEventListener('click',()=>showDialogBox(e))})
-        const deleteButtons = [...document.getElementsByClassName('deleteButton')].map(e=>{e.addEventListener('click',()=>showDialogBox(e))})
+        const editButtons = [...document.getElementsByClassName('editButton')].map(e=>{e.addEventListener('click',()=>modalBox.showDialogBox(e))})
+        const deleteButtons = [...document.getElementsByClassName('deleteButton')].map(e=>{e.addEventListener('click',()=>modalBox.showDialogBox(e))})
      })
 
 }
@@ -115,32 +116,74 @@ const renderTableHTML = function(tableName, array)
     
 }
 
-const showDialogBox = function(e)
-{
-    console.log(e.dataset.id)
-    console.log(e.className)
-    const tableName = document.getElementById('tableTable').caption.innerHTML
-    console.log(tableName)
-    const container = document.getElementById('container')
-    const modalBox = document.createElement('div')
-    modalBox.addClass='modalBox'
 
-    if(e.className=='editButton')
-   { 
-        modalBox.innerHTML = `
-        <div id='myModalBox' class='modalBox'>
-            <div class='modalBox-content'>
-                <span class='closeModalBox'>&times;</span>
-                <p>Some text in the Modal..</p>
-            </div>
-        </div>`
+
+// const showDialogBox = function(e)
+// {
+//     console.log(e.dataset.id)
+//     console.log(e.className)
+//     const tableName = document.getElementById('tableTable').caption.innerHTML
+//     console.log(tableName)
+//     const container = document.getElementById('container')
+//     const modalBox = document.createElement('div')
+//     modalBox.addClass='modalBox'
+
+//     if(e.className=='editButton')
+//    { 
+//         modalBox.innerHTML = `
+//         <div id='myModalBox' class='modalBox'>
+//             <div class='modalBox-content'>
+//                 <span id='closeModalBox' class='closeModalBox'>&times;</span>
+//                 <p>Some text in the Modal..</p>
+//             </div>
+//         </div>`
+//     }
+
+//     container.appendChild(modalBox)
+
+//     document.getElementById('myModalBox').style.display="block"
+//     document.getElementById('closeModalBox').addEventListener('click', ()=>{
+//         document.getElementById('myModalBox').style.display="none"
+//     })
+// }
+
+/***/ }),
+/* 2 */
+/***/ ((module) => {
+
+module.exports={
+    showDialogBox: function(e)
+    {
+        console.log(e.dataset.id)
+        console.log(e.className)
+        const tableName = document.getElementById('tableTable').caption.innerHTML
+        console.log(tableName)
+        const container = document.getElementById('container')
+        const modalBox = document.createElement('div')
+        modalBox.addClass='modalBox'
+
+        if(e.className=='editButton')
+    { 
+            modalBox.innerHTML = `
+            <div id='myModalBox' class='modalBox'>
+                <div class='modalBox-content'>
+                    <span id='closeModalBox' class='closeModalBox'>&times;</span>
+                    <p>Some text in the Modal..</p>
+                </div>
+            </div>`
+        }
+
+        container.appendChild(modalBox)
+
+        document.getElementById('myModalBox').style.display="block"
+        document.getElementById('closeModalBox').addEventListener('click', ()=>{
+            document.getElementById('myModalBox').style.display="none"
+        })
     }
-
-    container.appendChild(modalBox)
-
-    document.getElementById('myModalBox').style.display="block"
-
 }
+
+
+
 
 /***/ })
 /******/ 	]);
@@ -173,7 +216,9 @@ const showDialogBox = function(e)
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
+
 __webpack_require__(1)
+//require('./modalBox')
 })();
 
 /******/ })()
