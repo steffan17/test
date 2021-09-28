@@ -121,6 +121,53 @@ module.exports = {
             })
         })
 
+    },
+    selectRows: function(database, tableName, querry)
+    {
+        return new Promise((res, rej)=>{
+            let  db = new sqlite3.Database(database)
+            const sql = querry
+
+            const data = {}
+            data.records = []
+            data.collumnNames = []
+            data.info = {}
+            data.info.sql = sql
+            data.info.countRecords = 0
+
+
+            db.each(sql,[], (err,row)=>
+            {
+                if(err)
+                {
+                    rej(err)
+                }else
+                {
+                    data.info.countRecords++
+                    data.records.push(row)
+                    if(data.info.countRecords==1)
+                    {
+                        Object.keys(row).map((e) => {data.collumnNames.push(e)})
+                    }
+                    
+                }
+            },(err, n)=>
+            {                
+                if(err)
+                {
+                    rej(err)
+                }else
+                {   
+                    if(data.info.countRecords){res(data)}
+                    else
+                    {
+                        data.collumnNames = getTableColumnNames(database,tableName)
+                        res(getTableColumnNames(database,tableName))
+                    }
+                    
+                }
+            })
+        })
     }
 
 }

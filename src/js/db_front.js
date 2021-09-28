@@ -64,8 +64,8 @@ const showTheTable = (tableName)=>{
     fetch(`/api/showTheTable?tableName=${tableName}`).then(res => res.json()).then(data => {
         const tableContent = document.getElementById('tableContent')
         tableContent.innerHTML=renderTableHTML(tableName, data)
-        const editButtons = [...document.getElementsByClassName('editButton')].map(e=>{e.addEventListener('click',()=>modalBox.showDialogBox(e))})
-        const deleteButtons = [...document.getElementsByClassName('deleteButton')].map(e=>{e.addEventListener('click',()=>modalBox.showDialogBox(e))})
+        const editButtons = [...document.getElementsByClassName('editButton')].map(editButton=>{editButton.addEventListener('click',()=>modalBox.showDialogBox(editButton))})
+        const deleteButtons = [...document.getElementsByClassName('deleteButton')].map(deleteButton=>{deleteButton.addEventListener('click',()=>modalBox.showDialogBox(deleteButton))})
      })
 
 }
@@ -82,7 +82,7 @@ const renderTableHTML = function(tableName, array)
     <table id='tableTable' class='tableTable'>
     <caption>${tableName}</caption>
    
-    <thead> 
+    <thead id='tableHeader'> 
     ${tableNames.map(e =>{return `<th>${e}</th>`}).join('')}
     </thead>
     ${array.records.map(arrayMap => {
@@ -112,31 +112,3 @@ const renderTableHTML = function(tableName, array)
 
 
 
-// const showDialogBox = function(e)
-// {
-//     console.log(e.dataset.id)
-//     console.log(e.className)
-//     const tableName = document.getElementById('tableTable').caption.innerHTML
-//     console.log(tableName)
-//     const container = document.getElementById('container')
-//     const modalBox = document.createElement('div')
-//     modalBox.addClass='modalBox'
-
-//     if(e.className=='editButton')
-//    { 
-//         modalBox.innerHTML = `
-//         <div id='myModalBox' class='modalBox'>
-//             <div class='modalBox-content'>
-//                 <span id='closeModalBox' class='closeModalBox'>&times;</span>
-//                 <p>Some text in the Modal..</p>
-//             </div>
-//         </div>`
-//     }
-
-//     container.appendChild(modalBox)
-
-//     document.getElementById('myModalBox').style.display="block"
-//     document.getElementById('closeModalBox').addEventListener('click', ()=>{
-//         document.getElementById('myModalBox').style.display="none"
-//     })
-// }

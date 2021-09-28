@@ -9,6 +9,7 @@ router.get('/api/db', actions.dbOut);
 router.post('/api/db', actions.dbIn);
 router.get('/api/showTables', actions.showTables);
 router.get('/api/showTheTable', actions.showTheTable);
+router.get('/api/selectRows', actions.selectRows);
 
 
 module.exports = router;

@@ -70,8 +70,8 @@ const showTheTable = (tableName)=>{
     fetch(`/api/showTheTable?tableName=${tableName}`).then(res => res.json()).then(data => {
         const tableContent = document.getElementById('tableContent')
         tableContent.innerHTML=renderTableHTML(tableName, data)
-        const editButtons = [...document.getElementsByClassName('editButton')].map(e=>{e.addEventListener('click',()=>modalBox.showDialogBox(e))})
-        const deleteButtons = [...document.getElementsByClassName('deleteButton')].map(e=>{e.addEventListener('click',()=>modalBox.showDialogBox(e))})
+        const editButtons = [...document.getElementsByClassName('editButton')].map(editButton=>{editButton.addEventListener('click',()=>modalBox.showDialogBox(editButton))})
+        const deleteButtons = [...document.getElementsByClassName('deleteButton')].map(deleteButton=>{deleteButton.addEventListener('click',()=>modalBox.showDialogBox(deleteButton))})
      })
 
 }
@@ -88,7 +88,7 @@ const renderTableHTML = function(tableName, array)
     <table id='tableTable' class='tableTable'>
     <caption>${tableName}</caption>
    
-    <thead> 
+    <thead id='tableHeader'> 
     ${tableNames.map(e =>{return `<th>${e}</th>`}).join('')}
     </thead>
     ${array.records.map(arrayMap => {
@@ -118,59 +118,27 @@ const renderTableHTML = function(tableName, array)
 
 
 
-// const showDialogBox = function(e)
-// {
-//     console.log(e.dataset.id)
-//     console.log(e.className)
-//     const tableName = document.getElementById('tableTable').caption.innerHTML
-//     console.log(tableName)
-//     const container = document.getElementById('container')
-//     const modalBox = document.createElement('div')
-//     modalBox.addClass='modalBox'
 
-//     if(e.className=='editButton')
-//    { 
-//         modalBox.innerHTML = `
-//         <div id='myModalBox' class='modalBox'>
-//             <div class='modalBox-content'>
-//                 <span id='closeModalBox' class='closeModalBox'>&times;</span>
-//                 <p>Some text in the Modal..</p>
-//             </div>
-//         </div>`
-//     }
-
-//     container.appendChild(modalBox)
-
-//     document.getElementById('myModalBox').style.display="block"
-//     document.getElementById('closeModalBox').addEventListener('click', ()=>{
-//         document.getElementById('myModalBox').style.display="none"
-//     })
-// }
 
 /***/ }),
 /* 2 */
 /***/ ((module) => {
 
 module.exports={
-    showDialogBox: function(e)
+    showDialogBox: function(button)
     {
-        console.log(e.dataset.id)
-        console.log(e.className)
+        console.log(button.dataset.id)
+        console.log(button.className)
         const tableName = document.getElementById('tableTable').caption.innerHTML
         console.log(tableName)
         const container = document.getElementById('container')
         const modalBox = document.createElement('div')
         modalBox.addClass='modalBox'
 
-        if(e.className=='editButton')
+        if(button.className=='editButton')
     { 
-            modalBox.innerHTML = `
-            <div id='myModalBox' class='modalBox'>
-                <div class='modalBox-content'>
-                    <span id='closeModalBox' class='closeModalBox'>&times;</span>
-                    <p>Some text in the Modal..</p>
-                </div>
-            </div>`
+            
+            showEditBox(modalBox, button)
         }
 
         container.appendChild(modalBox)
@@ -178,12 +146,74 @@ module.exports={
         document.getElementById('myModalBox').style.display="block"
         document.getElementById('closeModalBox').addEventListener('click', ()=>{
             document.getElementById('myModalBox').style.display="none"
+            container.removeChild(modalBox)
         })
     }
 }
 
+const showEditBox = (modalBox, editButton)=>{
+
+    const headerElement =document.getElementById('tableHeader')
+    const headerChildNumber = headerElement.childElementCount
+    const tableName = document.getElementById('tableTable').caption.innerHTML
+
+    sqlQuerrySelect = `SELECT * FROM ${tableName} WHERE id = ${editButton.dataset.id}`
+
+    const listOfAreas = [...headerElement.children[0].children]
+    const row = [...editButton.parentElement.parentElement.children]
+    console.log(listOfAreas.length)
+    
 
 
+    const renderEditForm = (listOfAreas, row)=>{
+        let renderedHTML = []
+
+        for(let i=0;i<listOfAreas.length;i++)
+        {
+            let formRow = `<div class='modalBoxFormRow'>`
+            formRow += `<label for="${listOfAreas[i].textContent}">${listOfAreas[i].textContent}</label><span> :  </span>`
+            formRow += `<input type="text" id="${listOfAreas[i].textContent}" name="${listOfAreas[i].textContent}" value="${row[i].textContent}" >`
+            formRow += `</div>`
+            renderedHTML.push(formRow)
+            
+        }
+        return renderedHTML
+
+    }
+
+    
+
+    modalBox.innerHTML = `
+    <div id='myModalBox' class='modalBox'>
+        <div class='modalBox-content'>
+            <span id='closeModalBox' class='closeModalBox'>&times;</span>
+            <div id='modalBoxForm'>
+                <div id='modalBoxFormHeader'>Edytuj</div> 
+                <div class='modalBoxFormRow'>
+                    
+                    ${renderEditForm(listOfAreas, row).map(e=>{return e}).join('')}
+                   
+                </div>
+                <div id='modalBoxFormSaveButton' class='modalBoxFormSaveButton'>Zapisz</div>
+            </div>
+                      
+        </div>
+    </div>`
+}
+
+
+/***/ }),
+/* 3 */
+/***/ (() => {
+
+const testButton  = document.getElementById('forTests').addEventListener('click', ()=>{
+
+    const x = screen.width
+    const y = screen.height
+
+    alert(`szerokosc: ${x} wysokosc: ${y}`)
+
+})
 
 /***/ })
 /******/ 	]);
@@ -218,7 +248,7 @@ var __webpack_exports__ = {};
 (() => {
 
 __webpack_require__(1)
-//require('./modalBox')
+__webpack_require__(3)
 })();
 
 /******/ })()

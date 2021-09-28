@@ -41,5 +41,13 @@ module.exports = {
         const theTable = await db.showTheTable(database,tableName)
         res.send(JSON.stringify(theTable))
 
+    },
+    selectRows: async function(req, res)
+    {
+        const database = theDatabase
+        const tableName = req.query.tableName
+        const query = req.query.sql
+        const theTable = await db.selectRows(database,tableName, query)
+        res.send(JSON.stringify(theTable))
     }
 }
