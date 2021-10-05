@@ -11,25 +11,35 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
-
-  .modalBox-content{
+  .modalBox-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #888;
-    width: 80%;
-  }
-
+    width: 80%; 
+    max-width: 500px;
+    }
+  
   .closeModalBox {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
-    font-weight: bold;
-  }
-
+    font-weight: bold; }
+  
   .closeModalBox:hover,
-.closeModalBox:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
+  .closeModalBox:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer; }
+  .modalBox-form{
+    margin-top: 20px;
+  }
+  .modalBox-formHeader{
+    text-align: center;
+    margin-bottom: 10px;
+  }
+ .modalBox-formRow{
+  display: flex;
+    justify-content: space-between;
+    margin-right: 20PX;
+ }

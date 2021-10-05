@@ -1,0 +1,88 @@
+.tablesList {
+  border: 1px solid #000000;
+  border-radius: 10px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: fit-content;
+  height: fit-content;
+  padding-left: 20px;
+  padding-right: 20px; }
+
+.tablesList > li {
+  margin: 5px; }
+
+.tablesList > li:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer; }
+
+.result {
+  display: flex;
+  flex-direction: column; }
+
+.tableContent {
+  border: 1px solid #000000;
+  border-radius: 10px;
+  margin-block-start: 1em;
+  height: fit-content;
+  width: fit-content;
+  padding: 5px; }
+
+table.tableTable td:nth-child(even) {
+  background: #D4D4D4; }
+
+.modalBox {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */ }
+
+.modalBox-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px; }
+
+.closeModalBox {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold; }
+
+.closeModalBox:hover,
+.closeModalBox:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer; }
+
+.modalBox-form {
+  margin-top: 20px; }
+
+.modalBox-formHeader {
+  text-align: center;
+  margin-bottom: 10px; }
+
+.modalBox-formRow {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 20PX; }

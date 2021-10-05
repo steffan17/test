@@ -170,9 +170,9 @@ const showEditBox = (modalBox, editButton)=>{
 
         for(let i=0;i<listOfAreas.length;i++)
         {
-            let formRow = `<div class='modalBoxFormRow'>`
-            formRow += `<label for="${listOfAreas[i].textContent}">${listOfAreas[i].textContent}</label><span> :  </span>`
-            formRow += `<input type="text" id="${listOfAreas[i].textContent}" name="${listOfAreas[i].textContent}" value="${row[i].textContent}" >`
+            let formRow = `<div class='modalBox-formRow'>`
+            formRow += `<label for="${listOfAreas[i].textContent}" class="modalBox-formRowLabel">${listOfAreas[i].textContent}</label><span>  </span>`
+            formRow += `<input type="text" id="${listOfAreas[i].textContent}" class="modalBox-formRowTextBox" name="${listOfAreas[i].textContent}" value="${row[i].textContent}" >`
             formRow += `</div>`
             renderedHTML.push(formRow)
             
@@ -187,13 +187,11 @@ const showEditBox = (modalBox, editButton)=>{
     <div id='myModalBox' class='modalBox'>
         <div class='modalBox-content'>
             <span id='closeModalBox' class='closeModalBox'>&times;</span>
-            <div id='modalBoxForm'>
-                <div id='modalBoxFormHeader'>Edytuj</div> 
-                <div class='modalBoxFormRow'>
-                    
+            <div id='modalBoxForm' class='modalBox-form'>
+                <div id='modalBoxFormHeader' class='modalBox-formHeader'>Edytuj</div> 
+                                  
                     ${renderEditForm(listOfAreas, row).map(e=>{return e}).join('')}
                    
-                </div>
                 <div id='modalBoxFormSaveButton' class='modalBoxFormSaveButton'>Zapisz</div>
             </div>
                       
