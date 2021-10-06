@@ -86,3 +86,16 @@ table.tableTable td:nth-child(even) {
   display: flex;
   justify-content: space-between;
   margin-right: 20PX; }
+
+.modalBox-formRowLabel {
+  padding-left: 20px; }
+
+.modalBox-formSaveButton {
+  text-align: center;
+  margin: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid #000000;
+  border-radius: 20px;
+  width: fit-content;
+  padding: 5px; }

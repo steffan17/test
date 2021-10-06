@@ -19,23 +19,31 @@ module.exports={
 
         document.getElementById('myModalBox').style.display="block"
         document.getElementById('closeModalBox').addEventListener('click', ()=>{
-            document.getElementById('myModalBox').style.display="none"
-            container.removeChild(modalBox)
+            closeModalBox()
+        })
+        document.getElementById('modalBoxFormSaveButton').addEventListener('click', ()=>{
+            if(button.className=='editButton')
+            { 
+                saveEditBox(modalBox, button)
+            }
         })
     }
+}
+
+const closeModalBox = () =>{
+    const container = document.getElementById('container')
+    const modalBox = document.getElementById('myModalBox').parentNode
+    document.getElementById('myModalBox').style.display="none"
+            container.removeChild(modalBox)
 }
 
 const showEditBox = (modalBox, editButton)=>{
 
     const headerElement =document.getElementById('tableHeader')
-    const headerChildNumber = headerElement.childElementCount
-    const tableName = document.getElementById('tableTable').caption.innerHTML
-
-    sqlQuerrySelect = `SELECT * FROM ${tableName} WHERE id = ${editButton.dataset.id}`
 
     const listOfAreas = [...headerElement.children[0].children]
     const row = [...editButton.parentElement.parentElement.children]
-    console.log(listOfAreas.length)
+  
     
 
 
@@ -45,8 +53,8 @@ const showEditBox = (modalBox, editButton)=>{
         for(let i=0;i<listOfAreas.length;i++)
         {
             let formRow = `<div class='modalBox-formRow'>`
-            formRow += `<label for="${listOfAreas[i].textContent}" class="modalBox-formRowLabel">${listOfAreas[i].textContent}</label><span>  </span>`
-            formRow += `<input type="text" id="${listOfAreas[i].textContent}" class="modalBox-formRowTextBox" name="${listOfAreas[i].textContent}" value="${row[i].textContent}" >`
+            formRow += `<label for="input-${listOfAreas[i].textContent}" class="modalBox-formRowLabel">${listOfAreas[i].textContent}</label><span> </span>`
+            formRow += `<input type="text" id="input-${listOfAreas[i].textContent}" class="modalBox-formRowTextBox" name="${listOfAreas[i].textContent}" value="${row[i].textContent}" >`
             formRow += `</div>`
             renderedHTML.push(formRow)
             
@@ -66,9 +74,41 @@ const showEditBox = (modalBox, editButton)=>{
                                   
                     ${renderEditForm(listOfAreas, row).map(e=>{return e}).join('')}
                    
-                <div id='modalBoxFormSaveButton' class='modalBoxFormSaveButton'>Zapisz</div>
+                <div id='modalBoxFormSaveButton' class='modalBox-formSaveButton'>Zapisz</div>
             </div>
                       
         </div>
     </div>`
+}
+
+const saveEditBox = (modalBox, editButton) =>{
+
+    
+
+    const headerElement =document.getElementById('tableHeader')
+    const tableName = document.getElementById('tableTable').caption.innerHTML
+
+    const listOfAreas = [...headerElement.children[0].children]
+    const row = [...editButton.parentElement.parentElement.children]
+
+    const listOfAreasTable =[] 
+    const originalValues = []
+    const changedValues =[]
+
+    for(let i=0; i<listOfAreas.length;i++)
+    {
+        listOfAreasTable.push(listOfAreas[i].textContent)
+        originalValues.push(row[i].textContent)
+        changedValues.push(document.getElementById(`input-${listOfAreas[i].textContent}`).value)
+    }
+
+
+
+    const result = {
+        listOfAreasTable,
+        originalValues,
+        changedValues}
+
+    console.log(JSON.stringify(result))
+    closeModalBox()
 }
